@@ -4,6 +4,43 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
 
 class DiscordUtils {
+
+	/**
+	 * Gets the subdomain of a provided wiki URL and maps it 
+	 * to the wiki's name, which is then returned
+	 * 
+	 * @param mixed $url The URL to get the subdomain from
+	 * @return string The wiki's name
+	 */
+	public static function getWikiNameFromSubdomain( $url ) {
+		$subdomain = explode('.', $url['host'])[0];
+
+		$wikiNames = [
+			'meta' => "Meta",
+			'eldenring' => "Elden Ring",
+			'demonssouls' => "Demon's Souls",
+			'bloodborne' => "Bloodborne",
+			'sekiro' => "Sekiro",
+			'darksouls' => "Dark Souls 1",
+			'darksouls2' => "Dark Souls 2",
+			'darksouls3' => "Dark Souls 3"
+		];
+
+		return $wikiNames[$subdomain] ?? 'Unknown';
+	}
+
+	/**
+	 * Prepends the wiki name to the provided message.
+	 * @param string $msg The message to prepend the wiki name to
+	 * @param mixed $url The URL to get the wiki name from
+	 * @return string The modified message string
+	 */
+	public static function prependWikiName( $msg , $url) {
+		$wikiUrl = parse_url($url);
+		$wikiName = self::getWikiNameFromSubdomain($wikiUrl);
+		return '**[' . $wikiName . ' Wiki]** ' . $msg;
+	}
+
 	/**
 	 * Checks if criteria is met for this action to be cancelled
 	 */

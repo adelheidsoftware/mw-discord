@@ -56,6 +56,8 @@ class DiscordHooks {
 			DiscordUtils::createMarkdownLink( $wikiPage->getTitle(), $wikiPage->getTitle()->getFullURL( '', false, PROTO_CANONICAL ) ),
 			DiscordUtils::createRevisionText( $revision ),
 			( $summary ? ('`' . DiscordUtils::sanitiseText( DiscordUtils::truncateText( $summary ) ) . '`' ) : '' ) )->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $wikiPage->getTitle()->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -84,6 +86,8 @@ class DiscordHooks {
 			DiscordUtils::createMarkdownLink( $page->getTitle(), $page->getTitle()->getFullURL( '', false, PROTO_CANONICAL ) ),
 			( $reason ? ('`' . DiscordUtils::sanitiseText( DiscordUtils::truncateText( $reason ) ) . '`' ) : '' ),
 			$archivedRevisionCount)->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $page->getTitle()->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -111,6 +115,8 @@ class DiscordHooks {
 			($create ? '' : wfMessage( 'discord-undeleterev' )->text() ),
 			DiscordUtils::createMarkdownLink( $title, $title->getFullURL( '', false, PROTO_CANONICAL ) ),
 			( $comment ? ('`' . DiscordUtils::sanitiseText( DiscordUtils::truncateText( $comment ) ) . '`' ) : '' ))->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $title->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -137,6 +143,8 @@ class DiscordHooks {
 		$msg = wfMessage( 'discord-revvisibility', DiscordUtils::createUserLinks( $user ),
 			count($visibilityChangeMap),
 			DiscordUtils::createMarkdownLink( $title, $title->getFullURL( '', false, PROTO_CANONICAL ) ) )->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $title->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -162,6 +170,8 @@ class DiscordHooks {
 			DiscordUtils::createMarkdownLink( $article->getTitle(), $article->getTitle()->getFullURL( '', false, PROTO_CANONICAL ) ),
 			( $reason ? ('`' . DiscordUtils::sanitiseText( DiscordUtils::truncateText( $reason ) ) . '`' ) : '' ),
 			implode(", ", $protect) )->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $article->getTitle()->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -189,6 +199,8 @@ class DiscordHooks {
 			DiscordUtils::createMarkdownLink( $new, Title::castFromLinkTarget( $new )->getFullURL( '', false, PROTO_CANONICAL ) ),
 			( $reason ? ('`' . DiscordUtils::sanitiseText( DiscordUtils::truncateText( $reason ) ) . '`' ) : '' ),
 			DiscordUtils::createRevisionText( $revision ) )->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, Title::castFromLinkTarget( $new )->getTitle()->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -316,6 +328,8 @@ class DiscordHooks {
 			$lf->getWidth(),
 			$lf->getHeight(),
 			$lf->getMimeType() )->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $lf->getTitle()->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -345,6 +359,8 @@ class DiscordHooks {
 		$msg = wfMessage( 'discord-filedeletecomplete', DiscordUtils::createUserLinks( $user ),
 			DiscordUtils::createMarkdownLink( $file->getName(), $file->getTitle()->getFullURL( '', false, PROTO_CANONICAL ) ),
 			( $reason ? ('`' . DiscordUtils::sanitiseText( DiscordUtils::truncateText( $reason ) ) . '`' ) : '' ) )->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $file->getTitle()->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -369,6 +385,8 @@ class DiscordHooks {
 		$msg = wfMessage( 'discord-fileundeletecomplete', DiscordUtils::createUserLinks( $user ),
 			DiscordUtils::createMarkdownLink( $title, $title->getFullURL( '', false, PROTO_CANONICAL ) ),
 			( $reason ? ('`' . DiscordUtils::sanitiseText( DiscordUtils::truncateText( $reason ) ) . '`' ) : '' ) )->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $title->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -395,6 +413,8 @@ class DiscordHooks {
 		$msg = wfMessage( 'discord-afterimportpage', DiscordUtils::createUserLinks( $user ),
 			DiscordUtils::createMarkdownLink( $title, $title->getFullURL( '', false, PROTO_CANONICAL ) ),
 			$revCount, $sRevCount)->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $title->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
@@ -417,6 +437,8 @@ class DiscordHooks {
 		$msg = wfMessage( 'discord-articlemergecomplete', DiscordUtils::createUserLinks( $user ),
 			DiscordUtils::createMarkdownLink( $targetTitle, $targetTitle->getFullURL( '', false, PROTO_CANONICAL ) ),
 			DiscordUtils::createMarkdownLink( $destTitle, $destTitle->getFullURL( '', false, PROTO_CANONICAL ) ))->plain();
+		
+		$msg = DiscordUtils::prependWikiName($msg, $destTitle->getFullURL( '', false, PROTO_CANONICAL ));
 		DiscordUtils::handleDiscord($hookName, $msg);
 		return true;
 	}
